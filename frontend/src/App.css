@@ -1,16 +1,101 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-    height: 100vh;
-    background-color: #1a1a1a;
+  height: 100vh;
+  background-color: #252525;
 }
 
 #app {
-    height: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+header {
+  background-color: #1a1a1a;
+  padding: 40px;
+  color: #fff;
+  display: flex;
+  justify-content: space-around;
+}
+
+header > ul {
+  display: flex;
+  list-style: none;
+}
+header > ul > li > a {
+  margin: 20px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+}
+header > ul > li > a::after {
+  content: "";
+  background-color: #fff;
+  border-radius: 6px;
+  height: 4px;
+  width: 0;
+  position: absolute;
+  left: 0px;
+  bottom: -6px;
+  transition: width 0.5s ease;
+}
+
+header > ul > li > a:hover::after {
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+}
+
+main > .listUsers {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.436);
+  padding: 36px;
+}
+
+main > .listUsers > ul {
+  width: 350px;
+  list-style: none;
+  display: flex;
+}
+
+main > .listUsers > ul > li {
+  margin: 12px;
+  text-align: start;
+  width: 100%;
+  color: #fff;
+}
+
+main > .listUsers > ul > li > a {
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+}
+main > .listUsers > ul > li > a::after {
+  content: "";
+  background-color: #fff;
+  border-radius: 6px;
+  height: 3px;
+  width: 0;
+  position: absolute;
+  left: 0px;
+  bottom: -6px;
+  transition: width 0.5s ease;
+}
+
+main > .listUsers > ul > li > a:hover::after {
     width: 100%;
 }

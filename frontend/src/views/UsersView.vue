@@ -23,7 +23,8 @@ export default {
             <br />
             <ul v-for="user in users" :key="user.id">
                 <li>
-                    {{ user.id }} - <RouterLink to="/user/?">{{ user.fullName }}</RouterLink>
+                    {{ user.id }} - <RouterLink :to="{ name: 'userInfo', params: { id: user.id } }">{{ user.fullName }}
+                    </RouterLink>
                 </li>
             </ul>
         </div>

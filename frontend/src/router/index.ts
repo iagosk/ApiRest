@@ -20,12 +20,12 @@ const router = createRouter({
     {
       path: '/users',
       name: 'users',
-      component: () => import('@/views/UsersView.vue'),
+      component: () => import('../views/UsersView.vue'),
     },
     {
-      path: '/users/:id',
+      path: '/admin/users/users/:id',
       name: 'userInfo',
-      component: () => import('@/views/UserInfoView.vue'),
+      component: () => import('../views/UserInfoView.vue'),
       props: true,
     },
   ],

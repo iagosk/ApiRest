@@ -50,13 +50,153 @@ header > ul > li > a:hover::after {
 }
 
 main {
-  height: 100%;
   width: 100%;
+  color: #fff;
+}
+
+.titleArea {
+  width: 350px;
+  gap: 20px;
   display: flex;
-  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.titleAreaAbout {
+  width: 350px;
+  gap: 20px;
+  display: flex;
+  text-align: start;
+  flex-direction: column;
+}
+
+.titleArea > hr, .titleAreaAbout > hr {
+  border: 2px solid #fff;
+  border-radius: 10px;
+}
+
+.home {
+  display: flex;
+  padding-top: 120px;
   align-items: center;
   flex-direction: column;
+}
+
+.about {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.users {
+  padding: 120px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.userInfoArea {
+  padding: 120px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.userInfo {
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  padding: 30px;
+  width: 350px;
+}
+
+.inputForm {
+  width: 100%;
+  color: #000;
+  font-size: 1.1rem;
+  padding: 6px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 2px solid rgba(0, 0, 0, 0);
+}
+
+.buttonsForm {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+}
+
+.buttonForm {
+  background-color: rgb(31, 31, 114);
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 1rem;
   color: #fff;
+  width: 100%;
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.buttonForm:hover {
+  background-color: rgb(23, 23, 84);
+  transform: scale(.96);
+}
+
+.buttonBack {
+  background-color: rgb(184, 51, 51);
+  text-decoration: none;
+  text-align: center;
+}
+
+.buttonBack:hover {
+  background-color: rgb(146, 41, 41);
+}
+
+table {
+  width: 100%;
+}
+
+tr {
+  text-align: center;
+}
+
+tr > td {
+  padding: 8px;
+}
+
+tr > td > a {
+  margin: 5px;
+}
+
+.buttonTable {
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: #fff;
+  transition: all .3s ease;
+}
+
+.buttonTable:hover {
+  transform: scale(.96);
+}
+
+.buttonEdit:hover {
+  color: green;
+}
+
+.buttonDelete {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
+.buttonDelete > a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.buttonDelete > a:hover {
+  color: rgb(164, 34, 34);
 }
 
 main > .listUsers {
@@ -98,4 +238,60 @@ main > .listUsers > ul > li > a::after {
 
 main > .listUsers > ul > li > a:hover::after {
     width: 100%;
+}
+
+.alert {
+  position: absolute;
+  top: 0%;
+  border-radius: 6px;
+  width: 350px;
+  margin-top: 40px;
+  overflow: hidden;
+}
+
+.alert > header {
+  padding: 20px;
+  width: 100%;
+  display: block;
+}
+
+.alert > main {
+  background-color: #fff;
+  color: #000;
+  padding: 30px;
+  display: block;
+}
+
+.alert > footer {
+  background-color: #fff;
+  padding: 12px;
+  gap: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.alert > footer > button  {
+  width: 100%;
+  border: none;
+  color: #fff;
+  border-radius:6px;
+  padding: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  animation: buttonAlert infinite 10s ease;
+  transition: all .5s ease;
+}
+
+.alert > footer > button:hover  {
+  transform: scale(.97);
+}
+
+@keyframes buttonAlert {
+  0% {
+    top: 0%;
+  }
+  
+  100% {
+    top: 100%;
+  }
 }

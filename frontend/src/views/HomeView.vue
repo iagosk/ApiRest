@@ -2,7 +2,11 @@
 </script>
 
 <template>
-  <main>
-    <p>Home Page</p>
+  <main class="home"> 
+    <div class="titleArea">
+      <h1>API - Rest</h1>
+      <hr />
+      <br />
+    </div>
   </main>
 </template>

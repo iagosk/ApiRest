@@ -25,7 +25,7 @@ const router = createRouter({
     {
       path: '/admin/users/users/:id',
       name: 'userInfo',
-      component: () => import('../views/UserInfoView.vue'),
+      component: () => import('../views/UserEditView.vue'),
       props: true,
     },
   ],

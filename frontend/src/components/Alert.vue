@@ -4,7 +4,8 @@ const emit = defineEmits(['fechar'])
 defineProps({
     titulo: String,
     cor: String,
-    text: String,
+    msg: String,
+    type: String,
 })
 
 const fecharJanela = () => {
@@ -17,11 +18,11 @@ const fecharJanela = () => {
             <h2>{{ titulo }}</h2>
         </header>
         <main>
-            {{ text }}
+            {{ msg }}
         </main>
         <footer>
-            <button :style="{backgroundColor: cor}" @click="fecharJanela">Cancelar</button>
-            <button :style="{backgroundColor: cor}">Ok</button>
+            <button :style="{backgroundColor: cor}" @click="fecharJanela" v-if="type == 'confirm'">Cancelar</button>
+            <button :style="{backgroundColor: cor}" @click="fecharJanela">Ok</button>
         </footer>
     </div>
 </template>

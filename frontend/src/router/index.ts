@@ -18,15 +18,25 @@ const router = createRouter({
       component: () => import('@/views/AboutView.vue'),
     },
     {
-      path: '/users',
-      name: 'users',
-      component: () => import('../views/UsersView.vue'),
+      path: '/admin/',
+      name: 'admin',
+      component: () => import('@/views/UsersView.vue'),
     },
     {
-      path: '/admin/users/users/:id',
-      name: 'userInfo',
-      component: () => import('../views/UserEditView.vue'),
+      path: '/users/users-edit/:id',
+      name: 'user-info',
+      component: () => import('@/views/UserEditView.vue'),
       props: true,
+    },
+    {
+      path: '/register-user',
+      name: 'register-user',
+      component: () => import('@/views/RegisterUserView.vue'),
+    },
+    {
+      path: '/login-user',
+      name: 'login-user',
+      component: () => import('@/views/LoginUserView.vue'),
     },
   ],
 })

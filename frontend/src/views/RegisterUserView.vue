@@ -2,7 +2,9 @@
 import api from '@/services/api'
 import axios from 'axios'
 import Alert from '@/components/Alert.vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 
 export default {
     components: {
@@ -96,8 +98,8 @@ export default {
         </div>
         
         <Alert v-if="this.error_input" titulo="Campos vazios!" cor="rgb(164, 34, 34)" msg="Preencha todos os campos do formulário!" @fechar="this.error_input = false" />
-        <Alert v-if="this.success_register" titulo="Usuário Registrado!" cor="green" msg="O usuário foi registrado com sucesso!" @fechar="this.success_register = false" />
-        <Alert v-if="this.error_password" titulo="Erro de Senha!" cor="rgb(164, 34, 34)" msg="As senha não são iguais!" @fechar="this.error_password = false" />
+        <Alert v-if="this.success_register" titulo="Usuário Registrado!" cor="green" msg="O usuário foi registrado com sucesso. " @fechar="this.$router.push('login-user')" />
+        <Alert v-if="this.error_password" titulo="Erro de Senha!" cor="rgb(164, 34, 34)" msg="As senha não são iguais. Verifique se você preencheu os campos de senha corretamente." @fechar="this.error_password = false" />
         <Alert v-if="this.error_server" titulo="Erro do Servidor!" cor="rgb(164, 34, 34)" msg="Houve um erro no servidor da API." @fechar="this.error_server = false" />
     </main>
 </template>

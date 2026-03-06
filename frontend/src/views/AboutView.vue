@@ -1,10 +1,14 @@
 <template>
   <main class="about"> 
       <div class="titleAreaAbout">
-        <h1>Sobre esta página...</h1>
+        <h1>Sobre esta aplicação...</h1>
         <hr />
       </div>
       <br />
-      <p>Sistema desenvolvido em 10 de fevereiro de 2026. API - Rest desenvolvida com o framework python Django.</p>
+      <ul>
+        <li>Frontend desenvolvido com VueJS.</li>
+        <li>Backend desenvolvido com Django Rest Framework.</li>
+        <li>Banco de dados PostgreSQL.</li>
+      </ul>
   </main>
 </template>

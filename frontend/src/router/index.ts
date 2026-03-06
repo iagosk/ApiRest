@@ -18,12 +18,13 @@ const router = createRouter({
       component: () => import('@/views/AboutView.vue'),
     },
     {
-      path: '/admin/',
+      path: '/admin',
       name: 'admin',
+      meta: { requiresAuth: true },
       component: () => import('@/views/UsersView.vue'),
     },
     {
-      path: '/users/users-edit/:id',
+      path: '/admin/users-edit/:id',
       name: 'user-info',
       component: () => import('@/views/UserEditView.vue'),
       props: true,
@@ -38,7 +39,23 @@ const router = createRouter({
       name: 'login-user',
       component: () => import('@/views/LoginUserView.vue'),
     },
+    {
+      path: '/user-dashboard',
+      name: 'user-dashboard',
+      meta: { requiresAuth: true },
+      component: () => import('@/views/DashboardView.vue'),
+    }
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('access_token')
+
+  if(to.meta.requiresAuth && !token) {
+    next('login-user')
+  }else {
+    next()
+  }
 })
 
 export default router

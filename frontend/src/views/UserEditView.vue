@@ -8,21 +8,37 @@ const props = defineProps(['id'])
 
 const router = useRouter()
 
-const user = ref()
+interface User {
+    fullName: String,
+    nameUser: String,
+    age: String,
+    password: String,
+    is_admin: String,
+}
+
+const user = ref<User>({
+    fullName: '',
+    nameUser: '',
+    age: '',
+    password: '',
+    is_admin: '',
+})
 
 onBeforeMount(async () => {
-    const result = await fetch('http://127.0.0.1:8000/users/users/' + props.id)
-
+    const result = await api.get('user-admin/users-list/' + props.id)
+    console.log(result)
     if (result.status == 200) {
-        const resposta = await result.json()
+        const resposta = result.data
+        console.log(resposta)
         user.value = {
-            fullname: resposta.fullName,
-            age: resposta.age,
             nameUser: resposta.nameUser,
+            fullName: resposta.fullName,
+            age: resposta.age,
             password: resposta.password,
+            is_admin: resposta.is_admin,
         }
     } else {
-        router.push('/users')
+        router.push('/admin')
     }
 })
 </script>
@@ -33,13 +49,25 @@ onBeforeMount(async () => {
                 <h2>Edição de Usuário.</h2>
                 <br />
                 <hr />
-                <br />
-                <input type="text" class="inputForm" placeholder="Nome Completo..." :value="user.fullname" />
-                <input type="text" class="inputForm" placeholder="Idade..." :value="user.age" />
-                <input type="text" class="inputForm" placeholder="Nome de Usuário..." :value="user.nameUser" />
-                <input type="text" class="inputForm" placeholder="Senha..." :value="user.password" />
+                <br>
+                <label for="fullName">Nome Completo:</label>
+                <br>
+                <br>
+                <input type="text" name="fullName" class="inputForm" placeholder="Nome Completo..." :value="user.fullName" />
+                <label for="age">Idade:</label>
+                <br>
+                <br>
+                <input type="text" name="age" class="inputForm" placeholder="Idade..." :value="user.age" />
+                <label for="nameUser">Nome de Usuário:</label>
+                <br>
+                <br>
+                <input type="text" name="nameUser" class="inputForm" placeholder="Nome de Usuário..." :value="user.nameUser" />
+                <label for="password">Senha:</label>
+                <br>
+                <br>
+                <input type="text" name="password" class="inputForm" placeholder="Senha..." :value="user.password" />
                 <div class="buttonsForm">
-                    <RouterLink class="buttonFormEdit buttonBack" to="/users">Voltar</RouterLink>
+                    <RouterLink class="buttonFormEdit buttonBack" to="/admin">Voltar</RouterLink>
                     <input type="submit" class="buttonFormEdit" />
                 </div>
             </div>

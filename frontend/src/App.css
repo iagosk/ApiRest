@@ -31,6 +31,30 @@ header {
   justify-content: space-around;
 }
 
+@media screen and (max-width: 767px) {
+  header {
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-direction: column;
+  }
+
+  .buttonHeader {
+    position: relative;
+  }
+
+  .buttonHeader::before {
+    content: "";
+    border-radius: 6px;
+    height: 3px;
+    width: 200%;
+    background-color: #fff;
+    position: absolute;
+    left: -50%;
+    top: -20px;
+  }
+}
+
 header > ul {
   display: flex;
   list-style: none;
@@ -113,6 +137,17 @@ main {
   display: flex;
   padding-top: 180px;
   align-items: center;
+  flex-direction: column;
+}
+
+.blockHome {
+  background-color: #1a1a1a;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.176);
+  padding: 40px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 
@@ -211,8 +246,14 @@ main {
 }
 
 table {
-  width: 300px;
+  width: 500px;
   border-collapse: collapse;
+}
+
+@media screen and (max-width: 767px) {
+  table {
+    width: 350px;
+  }
 }
 
 tr {
@@ -241,11 +282,7 @@ tbody > tr:hover {
 
 tr > td, tr > th {
   border: 2px solid #fff;
-  padding: 8px;
-}
-
-tr > td > a {
-  margin: 5px;
+  padding: 12px;
 }
 
 .buttonTable {
@@ -259,23 +296,21 @@ tr > td > a {
   transform: scale(.96);
 }
 
-.buttonEdit:hover {
-  color: green;
-}
-
 .buttonDelete {
   background-color: rgba(0, 0, 0, 0);
   border: none;
+}
+
+.buttonEdit {
+  background-color: red;
+  height: 100%;
+  width: 100%;
 }
 
 .buttonDelete > a {
   color: #fff;
   text-decoration: none;
   font-size: 1.5rem;
-}
-
-.buttonDelete > a:hover {
-  color: rgb(164, 34, 34);
 }
 
 .formRegisterUser, .formLoginUser {
@@ -289,17 +324,63 @@ main > .users > .listUsers, main > .users > .registerUser > .formRegisterUser, m
   padding: 36px;
 }
 
+.buttonsActionTable {
+  transition: all .5s ease;
+}
+
+.buttonEditTable {
+  padding: 0px;
+}
+
+
+
+.buttonEditTable > a {
+  height: 100% !important;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  padding: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonEditTable > a:hover {
+  background-color: green;
+}
+
+.buttonDeleteTable:hover {
+  background-color: rgb(164, 34, 34);
+}
+
+.alertArea {
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 200vh;
+  width: 100%;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transition: all .5s ease;
+  overflow: none;
+}
+
+@media screen and (max-width: 767px) {
+  .alertArea {
+    height: 300vh;
+    overflow-x: none;
+  }
+}
+
 .alert {
   position: fixed;
   top: 0%;
   left: 50%;
   transform: translate(-50%, 0%);
   border-radius: 14px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.436);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.363);
   width: 350px;
   margin-top: 40px;
   overflow: hidden;
   z-index: 2;
+  transition: all .5s ease;
 }
 
 .alert > header {
@@ -389,7 +470,7 @@ main > .users > .listUsers, main > .users > .registerUser > .formRegisterUser, m
 .sidebar {
   background-color: #1a1a1a;
   border-left: 4px solid rgb(31, 31, 114);
-  height: 1200px;
+  height: 1350px;
   padding: 80px;
   top: -2px;
   left: 0px;
@@ -409,4 +490,18 @@ main > .users > .listUsers, main > .users > .registerUser > .formRegisterUser, m
   display: inline;
   color: rgb(31, 31, 114);
   text-decoration: underline;
+}
+
+.dashboard {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blockData {
+  background-color: #1a1a1a;
+  border-radius: 6px;
+  padding: 30px;
 }

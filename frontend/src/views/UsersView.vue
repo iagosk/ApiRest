@@ -1,10 +1,7 @@
 <script>
-import { ref } from "vue"
 import Alert from '@/components/Alert.vue'
 import api from '@/services/api'
-import axios from 'axios'
-
-const componenteExiste = ref(false)
+import { useRouter } from 'vue-router'
 
 export default {
     components: {
@@ -12,6 +9,8 @@ export default {
     },
     data() {
         return {
+            user_info: {},
+            router: useRouter(),
             users: [],
             exibir: false,
             searchUser: "",
@@ -25,20 +24,41 @@ export default {
             error_password: false,
             error_server: false,
             success_register: false,
+            componenteExiste: false,
         };
     },
-
+    async created() {
+        try {
+            const response = await api.get('user-admin/users-list')
+            this.info = response.data
+        } catch (error) {
+            if (error.status === 403) {
+                console.log("Este usuário não tem permissões de adiministrador, acesso negado.")
+                this.$router.push('/user-dashboard')
+            }
+            // localStorage.removeItem('access_token')
+        }
+    },
     async mounted() {
-        const resposta = await api.get('users/')
-        this.users = resposta.data
-        console.log(this.users)
+        this.buscarDados()
     },
     methods: {
+        logout() {
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
+            this.$router.push('/login-user')
+        },
+        async buscarDados() {
+            const resposta = await api.get('user-admin/users-list')
+            this.users = resposta.data
+            console.log(this.users)
+        },
         exibirAlert() {
             this.exibir = true
         },
         searchID() {
             this.userFinded = this.users.filter(user => user.id == this.searchUser)
+            console.log(this.userFinded)
         },
         async registerUser(event) {
             event.preventDefault()
@@ -61,12 +81,19 @@ export default {
                         this.nameUser = ''
                         this.password = ''
                         this.c_password = ''
+                        this.buscarDados()
                     } else {
                         this.error_password = true
-                        console.log("As senha não são iguais!")
+                        console.log("As senha não são iguais, verifique se preencheu os campos de senha corretamente.")
                     }
                 }
             } catch (error) {
+                if (error.response.data.nameUser[0]) {
+                    this.error_server = "Já existe um usuário com este nome registrado no sistema! Por favor escolha outro nome de usuário."
+                } else {
+                    this.error_server = error
+                }
+
                 console.log('Error: ', error.response.data)
             }
         }
@@ -85,7 +112,7 @@ export default {
                 <form>
                     <p class="searchArea">
                         <input type="search" v-model="searchUser" class="inputSearch"
-                            placeholder="Busque o usuário pelo id..." />
+                            placeholder="Busque o usuário pelo seu número de id..." />
                     </p>
                 </form>
                 <br />
@@ -95,39 +122,46 @@ export default {
                     <thead>
                         <tr>
                             <th>
-                                <h4>Nome de Usuário</h4>
+                                <h4>ID</h4>
                             </th>
                             <th>
+                                <h4>Nome de Usuário</h4>
+                            </th>
+                            <th colspan="2">
                                 <h4>Ações</h4>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="this.searchUser == ''" v-for="user in users" :key="user.id">
+                        <tr v-if="this.searchUser == ''" v-for="user in this.users" :key="user.id">
+                            <!-- Carrega os usuários que já estão cadastrados no sistema assim que a página carrega. -->
+                            <td>{{ user.id }}</td>
                             <td>{{ user.nameUser }}</td>
-                            <td>
+                            <td class="buttonsActionTable buttonEditTable">
                                 <RouterLink class="buttonTable buttonEdit"
                                     :to="{ name: 'user-info', params: { id: user.id } }"><i
                                         class="fi fi-sr-file-edit"></i>
                                 </RouterLink>
-                                <button v-if="!componenteExiste" class="buttonDelete" @click="exibirAlert">
+                            </td>
+                            <td class="buttonsActionTable buttonDeleteTable" @click="exibirAlert">
+                                <button v-if="!componenteExiste" class="buttonDelete">
                                     <RouterLink><i class="fi fi-sr-delete-document"></i>
                                     </RouterLink>
                                 </button>
-                                <Alert titulo="Deletar usuário..." cor="rgb(164, 34, 34)"
-                                    msg="Deseja mesmo deletar este usuário?" type="confirm" v-if="exibir"
-                                    @fechar="exibir = false" />
                             </td>
                         </tr>
                         <tr v-else-if="this.userFinded != undefined && this.userFinded != null"
                             v-for="user in this.userFinded">
+                            <!-- Carrega apenas o usuário cujo id for igual ao id buscado na barra de pesquisa. -->
                             <td>{{ user.id }}</td>
-                            <td>{{ user.fullName }}</td>
-                            <td>
+                            <td>{{ user.nameUser }}</td>
+                            <td class="buttonsActionTable buttonEditTable">
                                 <RouterLink class="buttonTable buttonEdit"
                                     :to="{ name: 'user-info', params: { id: user.id } }"><i
                                         class="fi fi-sr-file-edit"></i>
                                 </RouterLink>
+                            </td>
+                            <td class="buttonsActionTable buttonDeleteTable">
                                 <button v-if="!componenteExiste" class="buttonDelete" @click="exibirAlert">
                                     <RouterLink><i class="fi fi-sr-delete-document"></i>
                                     </RouterLink>
@@ -135,6 +169,7 @@ export default {
                             </td>
                         </tr>
                         <tr v-if="this.searchUser != '' && this.userFinded.length == 0">
+                            <!-- Retorna uma mensagem de erro, caso não exista um usuário com o id informado. -->
                             <td colspan="3">
                                 <h4 style="color: red">Usuário não encontrado!</h4>
                             </td>
@@ -177,14 +212,7 @@ export default {
             </div>
         </div>
         <div class="sidebar">
-            <ul>
-                <li>
-                    <RouterLink to="">Usuários</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="">Produtos</RouterLink>
-                </li>
-            </ul>
+
         </div>
         <Alert v-if="this.error_input" titulo="Campos vazios!" cor="rgb(164, 34, 34)"
             msg="Preencha todos os campos do formulário!" @fechar="this.error_input = false" />
@@ -192,7 +220,9 @@ export default {
             msg="O usuário foi registrado com sucesso!" @fechar="this.success_register = false" />
         <Alert v-if="this.error_password" titulo="Erro de Senha!" cor="rgb(164, 34, 34)" msg="As senha não são iguais!"
             @fechar="this.error_password = false" />
-        <Alert v-if="this.error_server" titulo="Erro do Servidor!" cor="rgb(164, 34, 34)"
-            msg="Houve um erro no servidor da API." @fechar="this.error_server = false" />
+        <Alert v-if="this.error_server != false" titulo="Erro do Servidor!" cor="rgb(164, 34, 34)"
+            :msg="this.error_server" @fechar="this.error_server = false" />
+        <Alert v-if="this.exibir" titulo="Deletar usuário..." cor="rgb(164, 34, 34)"
+            msg="Deseja mesmo deletar este usuário?" type="confirm" @fechar="this.exibir = false" />
     </main>
 </template>
